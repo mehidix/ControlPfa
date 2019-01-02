@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+#{controleurLogin.login}
+<br />
+#{controleurLogin.mdp}
+
+<h:form  enctype="multipart/form-data">
+<p:commandButton   value="charger Contact" action="#{controleurLogin.listC()}" update="dt" ></p:commandButton>
+<p:dataTable id="dt" value="#{controleurLogin.contact}" var="p" >
+
+  <p:column   headerText="Nom et Prenon "  filterBy="#{p.nomPrenom}"  filterMatchMode="contains">
+  <p:outputLabel value="#{p.nomPrenom}"></p:outputLabel>
+  
+  </p:column>
+  <p:column   headerText="Telephone" filterBy="#{p.telephone}" filterMatchMode="contains">
+  <p:outputLabel value="#{p.telephone}"></p:outputLabel>
+  
+  </p:column>  
+   <p:column   headerText="Mail" filterBy="#{p.mail}" filterMatchMode="contains">
+  <p:outputLabel value="#{p.mail}"></p:outputLabel>
+  
+  </p:column> 
+
+</p:dataTable >
+
+  <h:commandLink>
+             <h:graphicImage value="/img/csv-512.png" width="40px" />
+             <p:dataExporter type="csv" target="dt" fileName="contact" />
+</h:commandLink>
+ <p:growl id="messages" showDetail="true" />
+<br /> <br />
+<p:fileUpload value="#{controleurLogin.file}" mode="simple" skinSimple="true"/>
+     
+    <br /> <br />
+     
+    <p:commandButton value="Submit" ajax="false" action="#{controleurLogin.upload()}" disabled="false" />
+</h:form>
+
+
+</body> 
+</html>
